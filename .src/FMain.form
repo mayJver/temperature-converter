@@ -1,0 +1,99 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,152,77)
+  Background = Color.ButtonForeground
+  Foreground = Color.Black
+  FullScreen = True
+  { Label1 Label
+    MoveScaled(5,16,25,6)
+    Font = Font["+3"]
+    Text = ("Fahrenheit: ")
+  }
+  { Label2 Label
+    MoveScaled(5,24,21,6)
+    Font = Font["+3"]
+    Text = ("Celsius: ")
+  }
+  { Label3 Label
+    MoveScaled(5,33,25,6)
+    Font = Font["+3"]
+    Text = ("Kelvin: ")
+  }
+  { Label4 Label
+    MoveScaled(5,42,22,6)
+    Font = Font["+3"]
+    Text = ("Rankine: ")
+  }
+  { btnClear Button
+    MoveScaled(29,52,15,8)
+    Background = Color.ButtonForeground
+    Foreground = Color.Black
+    Text = ("Clear")
+    Cancel = True
+  }
+  { cmbColorToggle ComboBox
+    MoveScaled(4,51,21,11)
+    Background = Color.ButtonForeground
+    Foreground = Color.Black
+    List = [("0"), ("1"), ("2"), ("4"), ("8"), ("3"), ("5"), ("9"), ("6"), ("10"), ("12"), ("7"), ("13"), ("11"), ("14"), ("15")]
+    Text = ("Select color")
+  }
+  { txtF ValueBox
+    MoveScaled(31,16,35,5)
+    Background = &H22FFFFFF
+    Foreground = Color.Black
+    Tag = "txtF"
+  }
+  { txtC ValueBox
+    MoveScaled(31,24,35,5)
+    Background = &HFAFAFA
+    Foreground = Color.Black
+    Tag = "txtC"
+  }
+  { txtK ValueBox
+    MoveScaled(31,33,35,5)
+    Background = &HFAFAFA
+    Foreground = Color.Black
+  }
+  { txtR ValueBox
+    MoveScaled(31,41,35,5)
+    Background = &HFAFAFA
+    Foreground = Color.Black
+  }
+  { btnExit Button
+    MoveScaled(130,68,18,7)
+    Background = Color.ButtonForeground
+    Text = ("Exit")
+  }
+  { slbf Slider
+    MoveScaled(72,17,28,4)
+    Expand = True
+    Direction = Direction.LeftToRight
+    MinValue = -459
+    MaxValue = 1000
+  }
+  { slbc Slider
+    MoveScaled(72,25,28,4)
+    MinValue = -273
+    MaxValue = 1000
+  }
+  { slbk Slider
+    MoveScaled(72,34,28,4)
+    MaxValue = 10000
+  }
+  { slbr Slider
+    MoveScaled(72,42,28,4)
+    MaxValue = 10000
+  }
+  { btnIncreaseMax Button
+    MoveScaled(94,50,16,6)
+    Background = Color.ButtonForeground
+    Text = ("Increase")
+  }
+  { btnDecreaseMax Button
+    MoveScaled(118,50,16,6)
+    Background = Color.ButtonForeground
+    Text = ("Decrease")
+  }
+}

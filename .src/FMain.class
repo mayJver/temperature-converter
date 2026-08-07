@@ -1,0 +1,210 @@
+' Gambas class file
+' Authors: Annel Monserrat Guadarrama Trujillo & Ismael González Díaz Leal
+' Description: Temperature conversion tool with absolute zero validation.
+
+' 1. ENCAPSULATION & STRICT TYPING
+' Private variables since they are only used inside this class.
+Private $sErrorMessage As String = "Invalid temperature. Please try again."
+Private $valActiveBox As ValueBox ' Tracks focused input to prevent infinite update loops
+
+' 2. FOCUS EVENTS
+Public Sub slbf_GotFocus()
+  $valActiveBox = txtF
+End
+
+Public Sub slbc_GotFocus()
+  $valActiveBox = txtC
+End
+
+Public Sub slbk_GotFocus()
+  $valActiveBox = txtK
+End
+
+Public Sub slbr_GotFocus()
+  $valActiveBox = txtR
+End
+
+Public Sub txtC_GotFocus()
+  $valActiveBox = txtC
+End
+
+Public Sub txtK_GotFocus()
+  $valActiveBox = txtK
+End
+
+Public Sub txtR_GotFocus()
+  $valActiveBox = txtR
+End 
+
+Public Sub txtF_GotFocus()
+  $valActiveBox = txtF
+End
+
+' 3. LOGIC & MATHEMATICAL CONVERSIONS
+Public Sub txtF_Change()
+  If $valActiveBox = txtF Then
+    ' Prevent calculations below physical absolute zero (-459.67 F)
+    If txtF.Value < -459.67 Then 
+      Message.Warning($sErrorMessage)
+      txtF.Background = Color.Red
+      txtK.Value = 0
+      txtR.Value = 0
+    Else 
+      txtF.Background = Color.White
+      txtR.Background = Color.White
+      
+      ' Update other scales sequentially
+      txtC.Value = (5 / 9 * (txtF.Value - 32)) 
+      txtK.Value = (txtC.Value + 273.15)
+      txtR.Value = (txtF.Value + 459.67)
+    Endif 
+  Endif
+  slbf.Value = txtF.Value
+End
+
+Public Sub txtC_Change()
+  If $valActiveBox = txtC Then 
+    ' Prevent calculations below physical absolute zero (-273.15 C)
+    If txtC.Value < -273.15 Then
+      Message.Warning($sErrorMessage)
+      txtC.Background = Color.Red
+      txtK.Value = 0
+      txtR.Value = 0
+    Else 
+      txtC.Background = Color.White
+      txtK.Background = Color.White
+      txtR.Background = Color.White
+      
+      txtF.Value = ((1.8 * txtC.Value) + 32)
+      txtK.Value = (txtC.Value + 273.15)
+      txtR.Value = ((1.8 * txtC.Value) + 491.67)
+    Endif
+  Endif  
+  slbc.Value = txtC.Value
+End
+
+Public Sub txtK_Change()
+  If $valActiveBox = txtK Then
+    ' Kelvin scale cannot be negative
+    If txtK.Value >= 0 Then
+      txtK.Background = Color.White
+      txtC.Value = (txtK.Value - 273.15)
+      txtF.Value = (txtK.Value - 273.15) * 1.8 + 32
+      txtR.Value = (txtK.Value * 5 / 9)
+    Else 
+      txtK.Background = Color.Red
+      Message.Warning($sErrorMessage)
+    Endif
+  Endif
+  slbk.Value = txtK.Value
+End
+
+Public Sub txtR_Change()
+  If $valActiveBox = txtR Then 
+    ' Rankine scale cannot be negative
+    If txtR.Value >= 0 Then 
+      txtR.Background = Color.White
+      txtC.Value = (txtR.Value - 459.67) * 5 / 9
+      txtF.Value = (txtR.Value - 459.67)
+      txtK.Value = (txtR.Value * 5 / 9)
+    Else 
+       txtR.Background = Color.Red
+       Message.Warning($sErrorMessage)
+    Endif
+  Endif
+  slbr.Value = txtR.Value
+End
+
+' 4. HELPER METHODS (Private by default if not accessed externally)
+Private Sub ClearTemperatures()
+  ' Reset all values to absolute zero baseline
+  txtC.Value = -273.15
+  txtF.Value = -459.67
+  txtK.Value = 0
+  txtR.Value = 0 
+  
+  txtC.Background = Color.White
+  txtF.Background = Color.White
+  txtK.Background = Color.White
+  txtR.Background = Color.White
+  
+  slbc.Value = -273.15
+  slbf.Value = -459.67
+  slbk.Value = 0
+  slbr.Value = 0
+End
+
+' 5. UI CONTROLS & LIFECYCLE
+Public Sub Form_Open()
+  ' Initialize form with baseline values
+  ClearTemperatures()
+End
+
+Public Sub cmbColorToggle_Click()
+  ' Toggle background colors based on bit state evaluation
+  If BTst(Val(cmbColorToggle.Text), 0) = False Then 
+    txtF.Background = Color(255, 255, 255)
+  Else 
+    txtF.Background = Color(128, 128, 128)
+  Endif
+   
+  If BTst(Val(cmbColorToggle.Text), 1) = False Then 
+    txtC.Background = Color(255, 255, 255)
+  Else 
+    txtC.Background = Color(128, 128, 128)
+  Endif
+  
+  If BTst(Val(cmbColorToggle.Text), 2) = False Then 
+    txtK.Background = Color(255, 255, 255)
+  Else 
+    txtK.Background = Color(128, 128, 128)
+  Endif
+  
+  If BTst(Val(cmbColorToggle.Text), 3) = False Then 
+    txtR.Background = Color(255, 255, 255)
+  Else 
+    txtR.Background = Color(128, 128, 128)
+  Endif
+End
+
+Public Sub btnClear_Click()
+  ClearTemperatures()
+End
+
+Public Sub btnExit_Click()
+  Quit 
+End
+
+' 6. SLIDER SYNCHRONIZATION
+Public Sub slbf_Change()
+  txtF.Value = slbf.Value
+End
+
+Public Sub slbc_Change()
+  txtC.Value = slbc.Value
+End
+
+Public Sub slbk_Change()
+  txtK.Value = slbk.Value
+End
+
+Public Sub slbr_Change()
+  txtR.Value = slbr.Value
+End
+
+' 7. DYNAMIC RANGE ADJUSTMENTS
+Public Sub btnIncreaseMax_Click()
+  ' Expand slider max limit dynamically for high-temperature inputs
+  slbf.MaxValue = slbf.MaxValue + 1000
+  slbc.MaxValue = slbc.MaxValue + 1000
+  slbk.MaxValue = slbk.MaxValue + 1000
+  slbr.MaxValue = slbr.MaxValue + 1000
+End
+
+Public Sub btnDecreaseMax_Click()
+  ' Reduce slider max limit
+  slbf.MaxValue = slbf.MaxValue - 1000
+  slbc.MaxValue = slbc.MaxValue - 1000
+  slbk.MaxValue = slbk.MaxValue - 1000
+  slbr.MaxValue = slbr.MaxValue - 1000
+End
