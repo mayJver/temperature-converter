@@ -26,7 +26,7 @@ To run or compile this project, you need a Linux environment with the Gambas 3 f
 
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/your-username/absolute-zero-converter.git](https://github.com/mayJver/temperature-converter.git)
+   git clone [https://github.com/mayJver/temperature-converter.git](https://github.com/mayJver/temperature-converter.git)
    ```
 2. Open the Gambas 3 IDE.
 
@@ -41,7 +41,7 @@ If you wish to compile it into a standalone executable archive:
 
 gbc3 -a
 gba3
-./absolute-zero-converter.gambas
+./temperature-converter.gambas
 ```
 ## Architecture Notes
 
