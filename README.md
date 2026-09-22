@@ -26,13 +26,13 @@ To run or compile this project, you need a Linux environment with the Gambas 3 f
 
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/mayJver/temperature-converter.git](https://github.com/mayJver/temperature-converter.git)
+   git clone https://github.com/mayJver/temperature-converter.git
    ```
-2. Open the Gambas 3 IDE.
+3. Open the Gambas 3 IDE.
 
-3. Select Open project and navigate to the cloned directory.
+4. Select Open project and navigate to the cloned directory.
 
-4. Press F5 to run the application.
+5. Press F5 to run the application.
 
 **Option B: Running from Terminal (If compiled)**
 
